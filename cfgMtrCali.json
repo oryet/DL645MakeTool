@@ -1,0 +1,23 @@
+{	"DI":"F1FF", "Ctrl": "0B", "isData":true, "MtrAddr": "BBBBBBBBBBBB", "FrameHead": "FEDADA",
+	"Password": "JSLY",
+	"Vol":
+	[
+    220.0, 220.0, 220.0, 220.0
+	],
+	"Amp":
+	[
+    5.0,5.0,5.0
+	],
+	"PPwr":
+	[
+    550.0, 550.0, 550.0
+	],
+	"QPwr":
+	[
+    952.6, 952.6, 952.6
+	],
+	"ub": 220.0, "ib":1.5, "imax": 6.0,
+	"conste": 6400, "startip": 0.0, "freq": 50.0,
+	"wriemode": 0, "inmode": 0, "addmode": 0, "pclass": 0, "qclass": 0,
+	"volgain": 1, "ampgain": 1
+}

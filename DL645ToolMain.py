@@ -2,10 +2,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QDialog, QTa
 from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QIcon
 import sys, DL645MakeUI
-from PublicLib.Protocol.dl645resp import *
-from PublicLib.Protocol.dl645 import *
-from PublicLib.Protocol.dl645format import *
-from PublicLib import public as pub
+from DL645MakeFrame import *
+
 
 __author__ = 'jiangzy'
 
@@ -17,6 +15,7 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_MainWindow):
         # 将响应函数绑定到指定Button
         # self.pushButton.clicked.connect(self.showMessage)
         self.createActions()
+        self.dt = {'rtn':False, 'FrameHead':'', 'MtrAddr':'', 'Ctrl':'', 'DI':'', 'data':''}
 
     def createActions(self):
         self.pushButton_Code.clicked.connect(self.buttonCode)
@@ -29,15 +28,8 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_MainWindow):
         self.action_TempCali.triggered.connect(self.menuTempCali)
 
     def buttonCode(self):
-        FrameHead = self.lineEdit_FEFE.text()
-        MtrAddr = self.lineEdit_Addr.text()
-        Ctrl = self.lineEdit_Ctrl.text()
-        DI   = self.lineEdit_DI.text()
-        data = self.lineEdit_Data.text()
-
-        dl645data = DI + data
-        dl645data = Dl645DataAdd33(dl645data)
-        s = make645Frame(FrameHead, MtrAddr, Ctrl, dl645data)
+        self.getLineEdit()
+        s = self.dt_make645Frame()
         self.textEdit_CodeData.setText(s)
 
     def button_DeCode(self):
@@ -77,51 +69,54 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_MainWindow):
         cs = pfun.calcCheckSum(s)
         self.textEdit_CodeData.setPlainText(cs)
 
+    def getLineEdit(self):
+        self.dt['FrameHead'] = self.lineEdit_FEFE.text()
+        self.dt['MtrAddr'] = self.lineEdit_Addr.text()
+        self.dt['Ctrl'] = self.lineEdit_Ctrl.text()
+        self.dt['DI'] = self.lineEdit_DI.text()
+        self.dt['data'] = self.lineEdit_Data.text()
+
+    def setLineEdit(self):
+        self.lineEdit_FEFE.setText(self.dt['FrameHead'])
+        self.lineEdit_Addr.setText(self.dt['MtrAddr'])
+        self.lineEdit_Ctrl.setText(self.dt['Ctrl'])
+        self.lineEdit_DI.setText(self.dt['DI'])
+        self.lineEdit_Data.setText(self.dt['data'])
+
+    def dt_make645Frame(self):
+        try:
+            dl645data = self.dt['DI'] + self.dt['data']
+            self.dt['dl645data'] = Dl645DataAdd33(dl645data)
+            s = make645Frame(self.dt['FrameHead'], self.dt['MtrAddr'], self.dt['Ctrl'], self.dt['dl645data'])
+        except:
+            s = ''
+            print('dt_make645Frame err')
+        return s
+
     def menuTempCali(self):
-        Config = pub.loadDefaultSettings("cfgTemp.json")
+        self.getLineEdit()
+        makeTempCaliData(self.dt)
+        if self.dt['rtn']:
+            self.setLineEdit()
+            s = self.dt_make645Frame()
+            self.textEdit_CodeData.setText(s)
+        else:
+            self.alert(self.dt['msg'])
 
-        FrameHead = self.lineEdit_FEFE.text()
-        MtrAddr = self.lineEdit_Addr.text()
-        Ctrl = self.lineEdit_Ctrl.text()
-        DI = self.lineEdit_DI.text()
+    def menuMtrCali(self):
+        self.getLineEdit()
+        makeMtrCaliData(self.dt)
+        if self.dt['rtn']:
+            self.setLineEdit()
+            s = self.dt_make645Frame()
+            self.textEdit_CodeData.setText(s)
+        else:
+            self.alert(self.dt['msg'])
 
-        TEMP_PARAM_NUM = Config['dataNum']
-        tempList = Config['tempList']
-        vrefList = Config['vrefList']
-        # DI = Config['DI']
-        data = makeCaliData(TEMP_PARAM_NUM, tempList, vrefList)
-        dl645data = DI + data
-        dl645data = Dl645DataAdd33(dl645data)
-        s = make645Frame(FrameHead, MtrAddr, Ctrl, dl645data)
-        self.textEdit_CodeData.setText(s)
+    def alert(self, message):
+        QMessageBox.warning(self, "Warning", message)
 
 
-def CalSum(l):
-    s = sum(l)
-    s = abs(s)
-    s = int(s)
-    return s
-
-def makeCaliData(num, tempList, vrefList):
-    s1 = CalSum(tempList)
-    s2 = CalSum(vrefList)
-
-    s = ''
-    # 数量
-    s += dl645_xxxxxxxx2hex(num, 1)
-    # 温度
-    for i in range(num):
-        s += dl645_xxxxxxx_x2hex(tempList[i] , 1)
-    # 补偿
-    for i in range(num):
-        s += dl645_xxxxxxx_x2hex(vrefList[i] , 1)
-
-    # 校验
-    s += dl645_xxxxxxxx2hex(s1, 1)
-    s += dl645_xxxxxxxx2hex(s2, 1)
-    # print('\n', 's1=', s1, 's2=', s2)
-
-    return s
 
 
 if __name__ == '__main__':
