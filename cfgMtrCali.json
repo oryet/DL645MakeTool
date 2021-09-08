@@ -1,8 +1,8 @@
 {	"DI":"F1FF", "Ctrl": "0B", "isData":true, "MtrAddr": "BBBBBBBBBBBB", "FrameHead": "FEDADA",
-	"Password": "JSLY",
+	"Password": "SZLY",
 	"Vol":
 	[
-    220.0, 220.0, 220.0, 220.0
+    220.0, 220.0, 220.0
 	],
 	"Amp":
 	[

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>mainWindow</class>
+ <widget class="QMainWindow" name="mainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>DL645Tool V1.1 20210908</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -277,6 +277,7 @@
      <string>组帧</string>
     </property>
     <addaction name="action_TempCali"/>
+    <addaction name="action_FFF1"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -284,6 +285,11 @@
   <action name="action_TempCali">
    <property name="text">
     <string>温度补偿</string>
+   </property>
+  </action>
+  <action name="action_FFF1">
+   <property name="text">
+    <string>校表FFF1</string>
    </property>
   </action>
  </widget>

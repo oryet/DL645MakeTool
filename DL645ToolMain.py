@@ -8,7 +8,7 @@ from DL645MakeFrame import *
 __author__ = 'jiangzy'
 
 
-class MainWindow(QMainWindow, DL645MakeUI.Ui_MainWindow):
+class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
@@ -26,10 +26,12 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_MainWindow):
 
         #menu
         self.action_TempCali.triggered.connect(self.menuTempCali)
+        self.action_FFF1.triggered.connect(self.menuMtrCali)
 
     def buttonCode(self):
         self.getLineEdit()
         s = self.dt_make645Frame()
+
         self.textEdit_CodeData.setText(s)
 
     def button_DeCode(self):
@@ -88,6 +90,8 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_MainWindow):
             dl645data = self.dt['DI'] + self.dt['data']
             self.dt['dl645data'] = Dl645DataAdd33(dl645data)
             s = make645Frame(self.dt['FrameHead'], self.dt['MtrAddr'], self.dt['Ctrl'], self.dt['dl645data'])
+            s = pub.frameaddspace(s)
+            s = s.upper()
         except:
             s = ''
             print('dt_make645Frame err')
@@ -98,8 +102,8 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_MainWindow):
         makeTempCaliData(self.dt)
         if self.dt['rtn']:
             self.setLineEdit()
-            s = self.dt_make645Frame()
-            self.textEdit_CodeData.setText(s)
+            # s = self.dt_make645Frame()
+            # self.textEdit_CodeData.setText(s)
         else:
             self.alert(self.dt['msg'])
 
@@ -108,8 +112,8 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_MainWindow):
         makeMtrCaliData(self.dt)
         if self.dt['rtn']:
             self.setLineEdit()
-            s = self.dt_make645Frame()
-            self.textEdit_CodeData.setText(s)
+            # s = self.dt_make645Frame()
+            # self.textEdit_CodeData.setText(s)
         else:
             self.alert(self.dt['msg'])
 
