@@ -115,6 +115,25 @@ def makeMtrCaliData(dt):
         dt['rtn'] = False
         dt['msg'] = 'cfgMtrCali.json does not exist!'
 
+def makeMtrCaliData_ZeroLine(dt):
+    dt['fileName'] = "cfgMtrCali.json"
+    cfg = loadCfg(dt)
+    if dt['rtn']:
+        s = ''
+        # 密码 (4字节)
+        for d in cfg['Password']:
+            a = hex(ord(d)).replace('0x', '00')
+            s += a[-2:]
+        # (A/B/C)相电流(12字节)
+        for d in cfg['ZeroLineAmp']:
+            s += dl645_xx_xxxxxx2hex(d, t=HEX)
+
+        dt['data'] = s
+        dt['rtn'] = True
+    else:
+        dt['rtn'] = False
+        dt['msg'] = 'cfgMtrCali.json does not exist!'
+
 if __name__ == '__main__':
     dt = {}
     dt['fileName'] = "cfgMtrCali.json"

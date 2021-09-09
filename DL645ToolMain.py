@@ -26,7 +26,10 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
 
         #menu
         self.action_TempCali.triggered.connect(self.menuTempCali)
-        self.action_FFF1.triggered.connect(self.menuMtrCali)
+        self.action_MtrCali.triggered.connect(self.menuMtrCali)
+        self.action_MtrZoneLine.triggered.connect(self.menuMtrCali_ZeroLine)
+        self.action_MtrStart.triggered.connect(self.menuMtrCali_Start)
+        self.action_MtrEnd.triggered.connect(self.menuMtrCali_End)
 
     def buttonCode(self):
         self.getLineEdit()
@@ -79,11 +82,11 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         self.dt['data'] = self.lineEdit_Data.text()
 
     def setLineEdit(self):
-        self.lineEdit_FEFE.setText(self.dt['FrameHead'])
-        self.lineEdit_Addr.setText(self.dt['MtrAddr'])
-        self.lineEdit_Ctrl.setText(self.dt['Ctrl'])
-        self.lineEdit_DI.setText(self.dt['DI'])
-        self.lineEdit_Data.setText(self.dt['data'])
+        self.lineEdit_FEFE.setText(self.dt['FrameHead'].upper())
+        self.lineEdit_Addr.setText(self.dt['MtrAddr'].upper())
+        self.lineEdit_Ctrl.setText(self.dt['Ctrl'].upper())
+        self.lineEdit_DI.setText(self.dt['DI'].upper())
+        self.lineEdit_Data.setText(self.dt['data'].upper())
 
     def dt_make645Frame(self):
         try:
@@ -102,8 +105,6 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         makeTempCaliData(self.dt)
         if self.dt['rtn']:
             self.setLineEdit()
-            # s = self.dt_make645Frame()
-            # self.textEdit_CodeData.setText(s)
         else:
             self.alert(self.dt['msg'])
 
@@ -112,8 +113,34 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         makeMtrCaliData(self.dt)
         if self.dt['rtn']:
             self.setLineEdit()
-            # s = self.dt_make645Frame()
-            # self.textEdit_CodeData.setText(s)
+        else:
+            self.alert(self.dt['msg'])
+
+    def menuMtrCali_ZeroLine(self):
+        self.getLineEdit()
+        makeMtrCaliData_ZeroLine(self.dt)
+        if self.dt['rtn']:
+            self.setLineEdit()
+        else:
+            self.alert(self.dt['msg'])
+
+    def menuMtrCali_Start(self):
+        self.getLineEdit()
+        makeMtrCaliData(self.dt)
+        self.dt['data'] = self.dt['data'][:8] + '55555555'
+        self.dt['DI'] = 'F0FF'
+        if self.dt['rtn']:
+            self.setLineEdit()
+        else:
+            self.alert(self.dt['msg'])
+
+    def menuMtrCali_End(self):
+        self.getLineEdit()
+        makeMtrCaliData(self.dt)
+        self.dt['data'] = self.dt['data'][:8] + 'AAAAAAAA'
+        self.dt['DI'] = 'F0FF'
+        if self.dt['rtn']:
+            self.setLineEdit()
         else:
             self.alert(self.dt['msg'])
 

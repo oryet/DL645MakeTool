@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>DL645Tool V1.1 20210908</string>
+   <string>DL645Tool V1.2 20210909</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -277,7 +277,11 @@
      <string>组帧</string>
     </property>
     <addaction name="action_TempCali"/>
-    <addaction name="action_FFF1"/>
+    <addaction name="separator"/>
+    <addaction name="action_MtrStart"/>
+    <addaction name="action_MtrCali"/>
+    <addaction name="action_MtrZoneLine"/>
+    <addaction name="action_MtrEnd"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -287,9 +291,29 @@
     <string>温度补偿</string>
    </property>
   </action>
-  <action name="action_FFF1">
+  <action name="action_MtrCali">
    <property name="text">
-    <string>校表FFF1</string>
+    <string>电表校准</string>
+   </property>
+  </action>
+  <action name="action_MtrStart">
+   <property name="text">
+    <string>启动校表</string>
+   </property>
+  </action>
+  <action name="action_MtrEnd">
+   <property name="text">
+    <string>结束校表</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>电表校准</string>
+   </property>
+  </action>
+  <action name="action_MtrZoneLine">
+   <property name="text">
+    <string>零线校准</string>
    </property>
   </action>
  </widget>
