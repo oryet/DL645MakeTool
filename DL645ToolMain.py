@@ -76,16 +76,16 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
 
     def getLineEdit(self):
         self.dt['FrameHead'] = self.lineEdit_FEFE.text()
-        self.dt['MtrAddr'] = self.lineEdit_Addr.text()
+        self.dt['MtrAddr'] = pub.strReverse(self.lineEdit_Addr.text())
         self.dt['Ctrl'] = self.lineEdit_Ctrl.text()
-        self.dt['DI'] = self.lineEdit_DI.text()
+        self.dt['DI'] = pub.strReverse(self.lineEdit_DI.text())
         self.dt['data'] = self.lineEdit_Data.text()
 
     def setLineEdit(self):
         self.lineEdit_FEFE.setText(self.dt['FrameHead'].upper())
-        self.lineEdit_Addr.setText(self.dt['MtrAddr'].upper())
+        self.lineEdit_Addr.setText(pub.strReverse(self.dt['MtrAddr'].upper()))
         self.lineEdit_Ctrl.setText(self.dt['Ctrl'].upper())
-        self.lineEdit_DI.setText(self.dt['DI'].upper())
+        self.lineEdit_DI.setText(pub.strReverse(self.dt['DI'].upper()))
         self.lineEdit_Data.setText(self.dt['data'].upper())
 
     def dt_make645Frame(self):
