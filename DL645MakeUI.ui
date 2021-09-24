@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>DL645Tool V1.2 20210909</string>
+   <string>DL645Tool V1.3 20210924</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -70,6 +70,9 @@
           <property name="text">
            <string>FEFEFE</string>
           </property>
+          <property name="maxLength">
+           <number>8</number>
+          </property>
          </widget>
         </item>
         <item>
@@ -102,6 +105,9 @@
           <property name="text">
            <string>000000000000</string>
           </property>
+          <property name="maxLength">
+           <number>12</number>
+          </property>
          </widget>
         </item>
         <item>
@@ -128,6 +134,9 @@
           <property name="text">
            <string>3E</string>
           </property>
+          <property name="maxLength">
+           <number>2</number>
+          </property>
          </widget>
         </item>
         <item>
@@ -153,6 +162,9 @@
           </property>
           <property name="text">
            <string>F0000062</string>
+          </property>
+          <property name="maxLength">
+           <number>8</number>
           </property>
          </widget>
         </item>
@@ -283,7 +295,25 @@
     <addaction name="action_MtrZoneLine"/>
     <addaction name="action_MtrEnd"/>
    </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>数据项</string>
+    </property>
+    <addaction name="action_Energy"/>
+    <addaction name="action_Parm"/>
+    <addaction name="action_Curr"/>
+    <addaction name="action_Cuver"/>
+    <addaction name="action_FreezeDay"/>
+    <addaction name="action_FreezeMon"/>
+    <addaction name="action_SettlementDate"/>
+    <addaction name="action_MtrEvent"/>
+    <addaction name="action_TaskParm"/>
+    <addaction name="action_FileTrans"/>
+    <addaction name="action_CommParm"/>
+    <addaction name="action_ExParm"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_TempCali">
@@ -314,6 +344,66 @@
   <action name="action_MtrZoneLine">
    <property name="text">
     <string>零线校准</string>
+   </property>
+  </action>
+  <action name="action_Energy">
+   <property name="text">
+    <string>电量</string>
+   </property>
+  </action>
+  <action name="action_Parm">
+   <property name="text">
+    <string>参变量</string>
+   </property>
+  </action>
+  <action name="action_Curr">
+   <property name="text">
+    <string>瞬时量</string>
+   </property>
+  </action>
+  <action name="action_Cuver">
+   <property name="text">
+    <string>曲线冻结</string>
+   </property>
+  </action>
+  <action name="action_FreezeDay">
+   <property name="text">
+    <string>日冻结</string>
+   </property>
+  </action>
+  <action name="action_FreezeMon">
+   <property name="text">
+    <string>月冻结</string>
+   </property>
+  </action>
+  <action name="action_SettlementDate">
+   <property name="text">
+    <string>结算日</string>
+   </property>
+  </action>
+  <action name="action_MtrEvent">
+   <property name="text">
+    <string>事件</string>
+   </property>
+  </action>
+  <action name="action_TaskParm">
+   <property name="text">
+    <string>任务参数</string>
+   </property>
+  </action>
+  <action name="action_FileTrans">
+   <property name="text">
+    <string>文件传输</string>
+   </property>
+  </action>
+  <action name="action_CommParm">
+   <property name="text">
+    <string>通信参数</string>
+   </property>
+  </action>
+  <action name="action_ExParm">
+   <property name="text">
+    <string>其他参数</string>
    </property>
   </action>
  </widget>
