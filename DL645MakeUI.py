@@ -29,6 +29,11 @@ class Ui_mainWindow(object):
         self.textEdit_CodeData = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit_CodeData.setObjectName("textEdit_CodeData")
         self.verticalLayout.addWidget(self.textEdit_CodeData)
+        self.tableWidget_DI = QtWidgets.QTableWidget(self.centralwidget)
+        self.tableWidget_DI.setObjectName("tableWidget_DI")
+        self.tableWidget_DI.setColumnCount(0)
+        self.tableWidget_DI.setRowCount(0)
+        self.verticalLayout.addWidget(self.tableWidget_DI)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label_Head = QtWidgets.QLabel(self.centralwidget)
@@ -206,7 +211,7 @@ class Ui_mainWindow(object):
 
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
-        mainWindow.setWindowTitle(_translate("mainWindow", "DL645Tool V1.3 20210924"))
+        mainWindow.setWindowTitle(_translate("mainWindow", "DL645Tool V1.3 20210926"))
         self.label_Head.setText(_translate("mainWindow", "Head"))
         self.lineEdit_FEFE.setText(_translate("mainWindow", "FEFEFE"))
         self.label_Addr.setText(_translate("mainWindow", "Addr"))

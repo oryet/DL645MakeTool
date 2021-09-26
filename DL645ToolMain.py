@@ -1,9 +1,10 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QDialog, QTableWidgetItem, QHeaderView, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QDialog, QTableWidgetItem, QHeaderView, \
+    QAbstractItemView, QHeaderView, QTableWidget, QTableWidgetItem, QTableView
 from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtGui import QIcon
 import sys, DL645MakeUI
 from DL645MakeFrame import *
-
+from DL645OpenExcel import *
 
 __author__ = 'jiangzy'
 
@@ -15,7 +16,12 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         # 将响应函数绑定到指定Button
         # self.pushButton.clicked.connect(self.showMessage)
         self.createActions()
-        self.dt = {'rtn':False, 'FrameHead':'', 'MtrAddr':'', 'Ctrl':'', 'DI':'', 'data':''}
+        self.dt = {'rtn': False, 'FrameHead': '', 'MtrAddr': '', 'Ctrl': '', 'DI': '', 'data': ''}
+        # path = r'F:\Work\NLY1502\需求和协议\NLY1502 NLY1220数据项定义表 - 2021-7-15(1).xlsx'
+        path = os.getcwd() + r'\\NLY1502 NLY1220数据项定义表.xlsx'
+        self.dl = openExcel(path)
+
+        self.DIParmUIInit()
 
     def createActions(self):
         self.pushButton_Code.clicked.connect(self.buttonCode)
@@ -24,12 +30,25 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         self.pushButton_Sub33.clicked.connect(self.buttonSub33)
         self.pushButton_CS.clicked.connect(self.buttonCS)
 
-        #menu
+        # menu
         self.action_TempCali.triggered.connect(self.menuTempCali)
         self.action_MtrCali.triggered.connect(self.menuMtrCali)
         self.action_MtrZoneLine.triggered.connect(self.menuMtrCali_ZeroLine)
         self.action_MtrStart.triggered.connect(self.menuMtrCali_Start)
         self.action_MtrEnd.triggered.connect(self.menuMtrCali_End)
+
+        self.action_Energy.triggered.connect(self.menuEnergy)
+        self.action_Parm.triggered.connect(self.menuParm)
+        self.action_Curr.triggered.connect(self.menuCurr)
+        self.action_Cuver.triggered.connect(self.menuCuver)
+        self.action_FreezeDay.triggered.connect(self.menuFreezeDay)
+        self.action_FreezeMon.triggered.connect(self.menuFreezeMon)
+        self.action_SettlementDate.triggered.connect(self.menuSettlementDate)
+        self.action_MtrEvent.triggered.connect(self.menuMtrEvent)
+        self.action_TaskParm.triggered.connect(self.menuTaskParm)
+        self.action_FileTrans.triggered.connect(self.menuFileTrans)
+        self.action_CommParm.triggered.connect(self.menuCommParm)
+        self.action_ExParm.triggered.connect(self.menuExParm)
 
     def buttonCode(self):
         self.getLineEdit()
@@ -144,10 +163,114 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         else:
             self.alert(self.dt['msg'])
 
+    def DIParmUIInit(self):
+        self.tableWidget_DI.setRowCount(4)  # 行数
+        self.tableWidget_DI.setColumnCount(5)  # 列数
+        self.tableWidget_DI.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)  # 所有列自动拉伸，充满界面
+        self.tableWidget_DI.setSelectionMode(QAbstractItemView.SingleSelection)  # 设置只能选中一行
+        # self.tableWidget_DI.setEditTriggers(QTableView.NoEditTriggers)  # 不可编辑
+        # self.tableWidget_DI.setSelectionBehavior(QAbstractItemView.SelectItems)  # 设置选中一个
+        self.tableWidget_DI.setHorizontalHeaderLabels(
+            ['DI', '数据格式', '数据长度(字节)', '单位', '数据项名称'])  # 横向标题
+
+    def tableSetValue(self, dlt, i):
+        item = QTableWidgetItem(dlt['DI'][i])
+        self.tableWidget_DI.setItem(i, 0, item)
+        item = QTableWidgetItem(dlt['DIFormat'][i])
+        self.tableWidget_DI.setItem(i, 1, item)
+        item = QTableWidgetItem(dlt['DILen'][i])
+        self.tableWidget_DI.setItem(i, 2, item)
+        item = QTableWidgetItem(dlt['DIUnit'][i])
+        self.tableWidget_DI.setItem(i, 3, item)
+        item = QTableWidgetItem(dlt['DIName'][i])
+        self.tableWidget_DI.setItem(i, 4, item)
+
+    def menuEnergy(self):
+        dlt = self.dl['7.4.1电量']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuParm(self):
+        dlt = self.dl['7.4.2参变量']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuCurr(self):
+        dlt = self.dl['7.4.3瞬时量']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuCuver(self):
+        dlt = self.dl['7.4.4曲线冻结']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuFreezeDay(self):
+        dlt = self.dl['7.4.6日冻结']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuFreezeMon(self):
+        dlt = self.dl['7.4.7月冻结']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuSettlementDate(self):
+        dlt = self.dl['7.4.7.1结算日']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuMtrEvent(self):
+        dlt = self.dl['7.4.8电能表事件']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuTaskParm(self):
+        dlt = self.dl['7.4.9任务参数']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuFileTrans(self):
+        dlt = self.dl['7.4.10文件传输']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuCommParm(self):
+        dlt = self.dl['7.4.11通信参数']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
+    def menuExParm(self):
+        dlt = self.dl['7.4.14其他参数']
+        RowCount = len(dlt['DI'])
+        self.tableWidget_DI.setRowCount(RowCount)  # 行数
+        for i in range(RowCount):
+            self.tableSetValue(dlt, i)
+
     def alert(self, message):
         QMessageBox.warning(self, "Warning", message)
-
-
 
 
 if __name__ == '__main__':

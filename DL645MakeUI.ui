@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>DL645Tool V1.3 20210924</string>
+   <string>DL645Tool V1.3 20210926</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -25,6 +25,9 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QTextEdit" name="textEdit_CodeData"/>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tableWidget_DI"/>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
