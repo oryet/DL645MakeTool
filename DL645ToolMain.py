@@ -16,12 +16,11 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         # 将响应函数绑定到指定Button
         # self.pushButton.clicked.connect(self.showMessage)
         self.createActions()
-        self.dt = {'rtn': False, 'FrameHead': '', 'MtrAddr': '', 'Ctrl': '', 'DI': '', 'data': ''}
+        self.dt = {'rtn': False, 'FrameHead': '', 'MtrAddr': '', 'Ctrl': '', 'DI': '', 'data': '', 'parm': ''}
         # path = r'F:\Work\NLY1502\需求和协议\NLY1502 NLY1220数据项定义表 - 2021-7-15(1).xlsx'
-        path = os.getcwd() + r'\\NLY1502 NLY1220数据项定义表.xlsx'
-        self.dl = openExcel(path)
-
-        self.DIParmUIInit()
+        # path = os.getcwd() + r'\\NLY1502 NLY1220数据项定义表.xls'
+        # self.dl = openExcel(path)
+        # self.DIParmUIInit()
 
     def createActions(self):
         self.pushButton_Code.clicked.connect(self.buttonCode)
@@ -34,21 +33,22 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         self.action_TempCali.triggered.connect(self.menuTempCali)
         self.action_MtrCali.triggered.connect(self.menuMtrCali)
         self.action_MtrZoneLine.triggered.connect(self.menuMtrCali_ZeroLine)
+        self.action_MtrZoneLineOffset.triggered.connect(self.menuMtrCali_ZeroLineOffset)
         self.action_MtrStart.triggered.connect(self.menuMtrCali_Start)
         self.action_MtrEnd.triggered.connect(self.menuMtrCali_End)
 
-        self.action_Energy.triggered.connect(self.menuEnergy)
-        self.action_Parm.triggered.connect(self.menuParm)
-        self.action_Curr.triggered.connect(self.menuCurr)
-        self.action_Cuver.triggered.connect(self.menuCuver)
-        self.action_FreezeDay.triggered.connect(self.menuFreezeDay)
-        self.action_FreezeMon.triggered.connect(self.menuFreezeMon)
-        self.action_SettlementDate.triggered.connect(self.menuSettlementDate)
-        self.action_MtrEvent.triggered.connect(self.menuMtrEvent)
-        self.action_TaskParm.triggered.connect(self.menuTaskParm)
-        self.action_FileTrans.triggered.connect(self.menuFileTrans)
-        self.action_CommParm.triggered.connect(self.menuCommParm)
-        self.action_ExParm.triggered.connect(self.menuExParm)
+        # self.action_Energy.triggered.connect(self.menuEnergy)
+        # self.action_Parm.triggered.connect(self.menuParm)
+        # self.action_Curr.triggered.connect(self.menuCurr)
+        # self.action_Cuver.triggered.connect(self.menuCuver)
+        # self.action_FreezeDay.triggered.connect(self.menuFreezeDay)
+        # self.action_FreezeMon.triggered.connect(self.menuFreezeMon)
+        # self.action_SettlementDate.triggered.connect(self.menuSettlementDate)
+        # self.action_MtrEvent.triggered.connect(self.menuMtrEvent)
+        # self.action_TaskParm.triggered.connect(self.menuTaskParm)
+        # self.action_FileTrans.triggered.connect(self.menuFileTrans)
+        # self.action_CommParm.triggered.connect(self.menuCommParm)
+        # self.action_ExParm.triggered.connect(self.menuExParm)
 
     def buttonCode(self):
         self.getLineEdit()
@@ -135,6 +135,14 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         else:
             self.alert(self.dt['msg'])
 
+    def menuMtrCali_ZeroLineOffset(self):
+        self.getLineEdit()
+        makeMtrCaliData_ZeroLineOffset(self.dt)
+        if self.dt['rtn']:
+            self.setLineEdit()
+        else:
+            self.alert(self.dt['msg'])
+
     def menuMtrCali_ZeroLine(self):
         self.getLineEdit()
         makeMtrCaliData_ZeroLine(self.dt)
@@ -163,6 +171,7 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         else:
             self.alert(self.dt['msg'])
 
+    '''
     def DIParmUIInit(self):
         self.tableWidget_DI.setRowCount(4)  # 行数
         self.tableWidget_DI.setColumnCount(5)  # 列数
@@ -268,6 +277,7 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         self.tableWidget_DI.setRowCount(RowCount)  # 行数
         for i in range(RowCount):
             self.tableSetValue(dlt, i)
+    '''
 
     def alert(self, message):
         QMessageBox.warning(self, "Warning", message)

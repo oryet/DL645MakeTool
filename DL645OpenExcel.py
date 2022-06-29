@@ -57,6 +57,6 @@ def openExcel(path):
 
 
 if __name__ == '__main__':
-    path = r'F:\Work\NLY1502\需求和协议\NLY1502 NLY1220数据项定义表 - 2021-7-15(1).xlsx'
+    path = r'F:\Work\NLY1502\需求和协议\NLY1502 NLY1220数据项定义表 - 2021-7-15(1).xls'
     l = openExcel(path)
     print(l)

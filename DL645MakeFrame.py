@@ -36,6 +36,7 @@ def makeTempCaliData(dt):
         num = Config['dataNum']
         tempList = Config['tempList']
         vrefList = Config['vrefList']
+        dt['parm'] = [num, tempList, vrefList]
 
         s1 = CalSum(tempList)
         s2 = CalSum(vrefList)
@@ -127,6 +128,23 @@ def makeMtrCaliData_ZeroLine(dt):
         # (A/B/C)相电流(12字节)
         for d in cfg['ZeroLineAmp']:
             s += dl645_xx_xxxxxx2hex(d, t=HEX)
+
+        dt['data'] = s
+        dt['rtn'] = True
+    else:
+        dt['rtn'] = False
+        dt['msg'] = 'cfgMtrCali.json does not exist!'
+
+def makeMtrCaliData_ZeroLineOffset(dt):
+    dt['fileName'] = "cfgMtrCali.json"
+    cfg = loadCfg(dt)
+    if dt['rtn']:
+        s = ''
+        dt['DI'] = 'F7FF'
+        # 密码 (4字节)
+        for d in cfg['Password']:
+            a = hex(ord(d)).replace('0x', '00')
+            s += a[-2:]
 
         dt['data'] = s
         dt['rtn'] = True
