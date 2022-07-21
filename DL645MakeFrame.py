@@ -34,26 +34,32 @@ def makeTempCaliData(dt):
     Config = loadCfg(dt)
     if dt['rtn']:
         num = Config['dataNum']
-        tempList = Config['tempList']
-        vrefList = Config['vrefList']
-        dt['parm'] = [num, tempList, vrefList]
+        VolList = Config['VolList']
+        AmpList = Config['AmpList']
+        ZoneAmpList = Config['ZoneAmpList']
+        dt['parm'] = [num, VolList, AmpList, ZoneAmpList]
 
-        s1 = CalSum(tempList)
-        s2 = CalSum(vrefList)
+        s1 = CalSum(VolList)
+        s2 = CalSum(AmpList)
+        s3 = CalSum(ZoneAmpList)
 
         s = ''
         # 数量
-        s += dl645_xxxxxxxx2hex(num, 1)
-        # 温度
+        # s += dl645_xxxxxxxx2hex(num, 1)
+        # 电压补偿
         for i in range(num):
-            s += dl645_xxxxxxx_x2hex(tempList[i], 1)
-        # 补偿
+            s += dl645_xxxx2hex(VolList[i], 1)
+        # 电流补偿
         for i in range(num):
-            s += dl645_xxxxxxx_x2hex(vrefList[i], 1)
+            s += dl645_xxxx2hex(AmpList[i], 1)
+        # 零线 电流补偿
+        for i in range(num):
+            s += dl645_xxxx2hex(ZoneAmpList[i], 1)
 
         # 校验
-        s += dl645_xxxxxxxx2hex(s1, 1)
-        s += dl645_xxxxxxxx2hex(s2, 1)
+        s += dl645_xxxx2hex(s1, 1)
+        s += dl645_xxxx2hex(s2, 1)
+        s += dl645_xxxx2hex(s3, 1)
         # print('\n', 's1=', s1, 's2=', s2)
 
         dt['rtn'] = True
@@ -121,6 +127,7 @@ def makeMtrCaliData_ZeroLine(dt):
     cfg = loadCfg(dt)
     if dt['rtn']:
         s = ''
+        dt['DI'] = 'F6FF'
         # 密码 (4字节)
         for d in cfg['Password']:
             a = hex(ord(d)).replace('0x', '00')
@@ -145,6 +152,26 @@ def makeMtrCaliData_ZeroLineOffset(dt):
         for d in cfg['Password']:
             a = hex(ord(d)).replace('0x', '00')
             s += a[-2:]
+
+        dt['data'] = s
+        dt['rtn'] = True
+    else:
+        dt['rtn'] = False
+        dt['msg'] = 'cfgMtrCali.json does not exist!'
+
+def makeMtrCaliData_DataPowerOffset(dt):
+    dt['fileName'] = "cfgMtrCali.json"
+    cfg = loadCfg(dt)
+    if dt['rtn']:
+        s = ''
+        dt['DI'] = 'F8FF'
+        # 密码 (4字节)
+        for d in cfg['Password']:
+            a = hex(ord(d)).replace('0x', '00')
+            s += a[-2:]
+        # (A/B/C)相电流(12字节)
+        for d in cfg['PowerOffset']:
+            s += dl645_xxxx_xxxx2hex(d, t=HEX)
 
         dt['data'] = s
         dt['rtn'] = True

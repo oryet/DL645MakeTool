@@ -35,6 +35,7 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         self.action_MtrZoneLine.triggered.connect(self.menuMtrCali_ZeroLine)
         self.action_MtrZoneLineOffset.triggered.connect(self.menuMtrCali_ZeroLineOffset)
         self.action_MtrStart.triggered.connect(self.menuMtrCali_Start)
+        self.action_MtrPoffset.triggered.connect(self.menuMtrCali_PowerOffset)
         self.action_MtrEnd.triggered.connect(self.menuMtrCali_End)
 
         # self.action_Energy.triggered.connect(self.menuEnergy)
@@ -146,6 +147,14 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
     def menuMtrCali_ZeroLine(self):
         self.getLineEdit()
         makeMtrCaliData_ZeroLine(self.dt)
+        if self.dt['rtn']:
+            self.setLineEdit()
+        else:
+            self.alert(self.dt['msg'])
+
+    def menuMtrCali_PowerOffset(self):
+        self.getLineEdit()
+        makeMtrCaliData_DataPowerOffset(self.dt)
         if self.dt['rtn']:
             self.setLineEdit()
         else:

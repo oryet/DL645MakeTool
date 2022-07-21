@@ -20,6 +20,10 @@
 	[
     952.6, 952.6, 952.6
 	],
+	"PowerOffset":
+	[
+    100.6, 100.6, 100.6
+	],
 	"ub": 220.0, "ib":1.5, "imax": 6.0,
 	"conste": 6400, "startip": 0.0, "freq": 50.0,
 	"wriemode": 0, "inmode": 0, "addmode": 0, "pclass": 0, "qclass": 0,

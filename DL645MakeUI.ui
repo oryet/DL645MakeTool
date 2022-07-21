@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>DL645Tool V1.4 20220629</string>
+   <string>DL645Tool V1.4.2 20220721</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -294,6 +294,7 @@
     <addaction name="action_MtrCali"/>
     <addaction name="action_MtrZoneLineOffset"/>
     <addaction name="action_MtrZoneLine"/>
+    <addaction name="action_MtrPoffset"/>
     <addaction name="action_MtrEnd"/>
    </widget>
    <addaction name="menu"/>
@@ -392,6 +393,11 @@
   <action name="action_MtrZoneLineOffset">
    <property name="text">
     <string>零线偏置</string>
+   </property>
+  </action>
+  <action name="action_MtrPoffset">
+   <property name="text">
+    <string>功率偏置</string>
    </property>
   </action>
  </widget>
