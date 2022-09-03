@@ -1,6 +1,4 @@
 from PublicLib import public as pub
-from PublicLib.Protocol.dl645resp import *
-from PublicLib.Protocol.dl645 import *
 from PublicLib.Protocol.dl645format import *
 
 
@@ -171,7 +169,32 @@ def makeMtrCaliData_DataPowerOffset(dt):
             s += a[-2:]
         # (A/B/C)相电流(12字节)
         for d in cfg['PowerOffset']:
-            s += dl645_xxxx_xxxx2hex(d, t=HEX)
+            s += dl645_xx_xxxxxx2hex(d, 1, t=HEX)
+
+        dt['data'] = s
+        dt['rtn'] = True
+    else:
+        dt['rtn'] = False
+        dt['msg'] = 'cfgMtrCali.json does not exist!'
+
+def makeMtrVirtualData_Ins(dt):
+    dt['fileName'] = "MtrVirtual.json"
+    cfg = loadCfg(dt)
+    if dt['rtn']:
+        s = ''
+        dt['DI'] = '700000F0'
+        # Ua,Ub,Uc
+        for d in cfg['Vol']:
+            s += dl645_xxx_x2hex(d, t=BCD)
+        # Ia,Ib,Ic,In
+        for d in cfg['Amp']:
+            s += dl645_xx_xxxxxx2hex(d, t=BCD)
+        # PhUa,PhUb,PhUc,PhIa,PhIb,PhIc,AngleA,AngleB,AngleC,PhIc-PhIa
+        for d in cfg['Arc']:
+            s += dl645_xxx_x2hex(d, t=BCD)
+        # 电压频率
+        for d in cfg['Frequency']:
+            s += dl645_xxx_x2hex(d, t=BCD)
 
         dt['data'] = s
         dt['rtn'] = True

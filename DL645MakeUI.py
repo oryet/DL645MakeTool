@@ -182,6 +182,8 @@ class Ui_mainWindow(object):
         self.action_MtrZoneLineOffset.setObjectName("action_MtrZoneLineOffset")
         self.action_MtrPoffset = QtWidgets.QAction(mainWindow)
         self.action_MtrPoffset.setObjectName("action_MtrPoffset")
+        self.action_MtrVirt = QtWidgets.QAction(mainWindow)
+        self.action_MtrVirt.setObjectName("action_MtrVirt")
         self.menu.addAction(self.action_TempCali)
         self.menu.addSeparator()
         self.menu.addAction(self.action_MtrStart)
@@ -190,6 +192,8 @@ class Ui_mainWindow(object):
         self.menu.addAction(self.action_MtrZoneLine)
         self.menu.addAction(self.action_MtrPoffset)
         self.menu.addAction(self.action_MtrEnd)
+        self.menu.addSeparator()
+        self.menu.addAction(self.action_MtrVirt)
         self.menubar.addAction(self.menu.menuAction())
 
         self.retranslateUi(mainWindow)
@@ -197,7 +201,7 @@ class Ui_mainWindow(object):
 
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
-        mainWindow.setWindowTitle(_translate("mainWindow", "DL645Tool V1.4.2 20220721"))
+        mainWindow.setWindowTitle(_translate("mainWindow", "DL645Tool V1.4.4 20220903"))
         self.label_Head.setText(_translate("mainWindow", "Head"))
         self.lineEdit_FEFE.setText(_translate("mainWindow", "FEFEFE"))
         self.label_Addr.setText(_translate("mainWindow", "Addr"))
@@ -234,3 +238,4 @@ class Ui_mainWindow(object):
         self.action_ExParm.setText(_translate("mainWindow", "其他参数"))
         self.action_MtrZoneLineOffset.setText(_translate("mainWindow", "零线偏置"))
         self.action_MtrPoffset.setText(_translate("mainWindow", "功率偏置"))
+        self.action_MtrVirt.setText(_translate("mainWindow", "模拟数据"))

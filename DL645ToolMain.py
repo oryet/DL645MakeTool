@@ -1,10 +1,7 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QDialog, QTableWidgetItem, QHeaderView, \
-    QAbstractItemView, QHeaderView, QTableWidget, QTableWidgetItem, QTableView
-from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 import sys, DL645MakeUI
 from DL645MakeFrame import *
-from DL645OpenExcel import *
+from dl645 import *
 
 __author__ = 'jiangzy'
 
@@ -36,6 +33,7 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         self.action_MtrZoneLineOffset.triggered.connect(self.menuMtrCali_ZeroLineOffset)
         self.action_MtrStart.triggered.connect(self.menuMtrCali_Start)
         self.action_MtrPoffset.triggered.connect(self.menuMtrCali_PowerOffset)
+        self.action_MtrVirt.triggered.connect(self.menuMtrVirtual_SetIns)
         self.action_MtrEnd.triggered.connect(self.menuMtrCali_End)
 
         # self.action_Energy.triggered.connect(self.menuEnergy)
@@ -155,6 +153,14 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
     def menuMtrCali_PowerOffset(self):
         self.getLineEdit()
         makeMtrCaliData_DataPowerOffset(self.dt)
+        if self.dt['rtn']:
+            self.setLineEdit()
+        else:
+            self.alert(self.dt['msg'])
+
+    def menuMtrVirtual_SetIns(self):
+        self.getLineEdit()
+        makeMtrVirtualData_Ins(self.dt)
         if self.dt['rtn']:
             self.setLineEdit()
         else:
