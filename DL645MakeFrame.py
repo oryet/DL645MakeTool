@@ -169,7 +169,7 @@ def makeMtrCaliData_DataPowerOffset(dt):
             s += a[-2:]
         # (A/B/C)相电流(12字节)
         for d in cfg['PowerOffset']:
-            s += dl645_xx_xxxxxx2hex(d, 1, t=HEX)
+            s += dl645_xx_xxxxxx2hex(d, 1, t=BCD)
 
         dt['data'] = s
         dt['rtn'] = True
