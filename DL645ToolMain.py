@@ -15,7 +15,8 @@ class MainWindow(QMainWindow, MeterCalibrationUI.Ui_mainWindow):
         self.createActions()
         self.dt = {'rtn': False, 'FrameHead': '', 'MtrAddr': '', 'Ctrl': '', 'DI': '', 'data': '', 'meterParm': '', 'tempParm': '',
                    'Vol':[0]*3, 'Amp':[0]*3, 'PPwr':[0]*3, 'QPwr':[0]*3, 'conste':0, 'startip':0, 'ub':0, 'ib':0, 'imax':0,
-                   'freq':0, 'wriemode':0, 'inmode':0, 'addmode':0, 'pclass':0, 'qclass':0, 'volgain':0, 'ampgain':0}
+                   'freq':0, 'wriemode':0, 'inmode':0, 'addmode':0, 'pclass':0, 'qclass':0, 'volgain':0, 'ampgain':0,
+                   'ZeroLineAmp':[0]*3, 'PowerOffset':[0]*3}
         # path = r'F:\Work\NLY1502\需求和协议\NLY1502 NLY1220数据项定义表 - 2021-7-15(1).xlsx'
         # path = os.getcwd() + r'\\NLY1502 NLY1220数据项定义表.xls'
         # self.dl = openExcel(path)
@@ -115,17 +116,63 @@ class MainWindow(QMainWindow, MeterCalibrationUI.Ui_mainWindow):
         self.dt['MtrAddr'] = pub.strReverse(self.lineEdit_Addr.text())
         self.dt['Ctrl'] = self.lineEdit_Ctrl.text()
         self.dt['DI'] = pub.strReverse(self.lineEdit_DI.text())
+        self.dt['Password'] = self.lineEdit_Password.text()
         # self.dt['data'] = self.lineEdit_Data.text()
         # vol
         self.dt['Vol'][0] = float(self.lineEdit_Vol_A.text())
         self.dt['Vol'][1] = float(self.lineEdit_Vol_B.text())
         self.dt['Vol'][2] = float(self.lineEdit_Vol_C.text())
+        # amp
+        self.dt['Amp'][0] = float(self.lineEdit_Amp_A.text())
+        self.dt['Amp'][1] = float(self.lineEdit_Amp_B.text())
+        self.dt['Amp'][2] = float(self.lineEdit_Amp_C.text())
+        # ppwr
+        self.dt['PPwr'][0] = float(self.lineEdit_PPwr_A.text())
+        self.dt['PPwr'][1] = float(self.lineEdit_PPwr_B.text())
+        self.dt['PPwr'][2] = float(self.lineEdit_PPwr_C.text())
+        # qpwr
+        self.dt['QPwr'][0] = float(self.lineEdit_QPwr_A.text())
+        self.dt['QPwr'][1] = float(self.lineEdit_QPwr_B.text())
+        self.dt['QPwr'][2] = float(self.lineEdit_QPwr_C.text())
+        # conste
+        self.dt['conste'] = float(self.lineEdit_conste.text())
+        # startip
+        self.dt['startip'] = float(self.lineEdit_startip.text())
+        # ub
+        self.dt['ub'] = float(self.lineEdit_ub.text())
+        # ib
+        self.dt['ib'] = float(self.lineEdit_ib.text())
+        # imax
+        self.dt['imax'] = float(self.lineEdit_imax.text())
+        # freq
+        self.dt['freq'] = float(self.lineEdit_freq.text())
+        # imax
+        self.dt['wriemode'] = float(self.lineEdit_wriemode.text())
+        # inmode
+        self.dt['inmode'] = float(self.lineEdit_inmode.text())
+        # addmode
+        self.dt['addmode'] = float(self.lineEdit_addmode.text())
+        # pclass
+        self.dt['pclass'] = float(self.lineEdit_pclass.text())
+        # qclass
+        self.dt['qclass'] = float(self.lineEdit_qclass.text())
+        # volgain
+        self.dt['volgain'] = float(self.lineEdit_volgain.text())
+        # ampgain
+        self.dt['ampgain'] = float(self.lineEdit_ampgain.text())
+        # ZeroLineAmp
+        self.dt['ZeroLineAmp'][0] = float(self.lineEdit_ZeroLineAmp.text())
+        # PowerOffset
+        self.dt['PowerOffset'][0] = float(self.lineEdit_PowerOffset_A.text())
+        self.dt['PowerOffset'][1] = float(self.lineEdit_PowerOffset_B.text())
+        self.dt['PowerOffset'][2] = float(self.lineEdit_PowerOffset_C.text())
 
     def setLineEdit(self):
         self.lineEdit_FEFE.setText(self.dt['FrameHead'].upper())
         self.lineEdit_Addr.setText(pub.strReverse(self.dt['MtrAddr'].upper()))
         self.lineEdit_Ctrl.setText(self.dt['Ctrl'].upper())
         self.lineEdit_DI.setText(pub.strReverse(self.dt['DI'].upper()))
+        self.lineEdit_Password.setText(self.dt['Password'])
         # self.lineEdit_Data.setText(self.dt['data'].upper())
         # vol
         self.lineEdit_Vol_A.setText(str(self.dt['Vol'][0]))

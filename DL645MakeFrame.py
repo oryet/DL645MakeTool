@@ -72,140 +72,113 @@ def makeTempCaliData(dt):
         dt['msg'] = 'cfgTemp.json does not exist!'
 
 def makeMtrCaliData(dt):
-    # dt['fileName'] = "cfgMtrCali.json"
-    # cfg = loadCfg(dt)
-    if dt['rtn']:
-        s = ''
-        # 密码 (4字节)
-        for d in dt['Password']:
-            a = hex(ord(d)).replace('0x', '00')
-            s += a[-2:]
-        # (A/B/C)相电压(12字节)
-        for d in dt['Vol']:
-            s += dl645_xxxx_xxxx2hex(d, t=HEX)
-        # (A/B/C)相电流(12字节)
-        for d in dt['Amp']:
-            s += dl645_xx_xxxxxx2hex(d, t=HEX)
-        # (A/B/C)相有功功率(12字节)
-        for d in dt['PPwr']:
-            s += dl645_xxxx_xxxx2hex(d, t=HEX)
-        # (A/B/C)相无功功率(12字节)
-        for d in dt['QPwr']:
-            s += dl645_xxxx_xxxx2hex(d, t=HEX)
-        # 脉冲常数(4字节)
-        s += dl645_xxxxxxxx2hex(dt['conste'], t=HEX)
-        # 启动功率(4字节)
-        s += dl645_xxxx_xxxx2hex(dt['startip'], t=HEX)
-        # 额定电压(2字节)
-        s += dl645_xxx_x2hex(dt['ub'], t=HEX)
-        # 额定电流(2字节)
-        s += dl645_x_xxx2hex(dt['ib'], t=HEX)
-        # 最大电流(2字节)
-        s += dl645_xx_xx2hex(dt['imax'], t=HEX)
-        # 频率(1字节)
-        s += dl645_xx2hex(dt['freq'], t=HEX)
-        # 接线模式(1字节)
-        s += dl645_xx2hex(dt['wriemode'], t=HEX)
-        # 接入模式(1字节)
-        s += dl645_xx2hex(dt['inmode'], t=HEX)
-        # 能量累加模式(1字节)
-        s += dl645_xx2hex(dt['addmode'], t=HEX)
-        # 有功等级(1字节)
-        s += dl645_xx2hex(dt['pclass'], t=HEX)
-        # 无功等级(1字节)
-        s += dl645_xx2hex(dt['qclass'], t=HEX)
-        # 电压增益(1字节)
-        s += dl645_xx2hex(dt['volgain'], t=HEX)
-        # 电流增益(1字节)
-        s += dl645_xx2hex(dt['ampgain'], t=HEX)
+    s = ''
+    # 密码 (4字节)
+    for d in dt['Password']:
+        a = hex(ord(d)).replace('0x', '00')
+        s += a[-2:]
+    # (A/B/C)相电压(12字节)
+    for d in dt['Vol']:
+        s += dl645_xxxx_xxxx2hex(d, t=HEX)
+    # (A/B/C)相电流(12字节)
+    for d in dt['Amp']:
+        s += dl645_xx_xxxxxx2hex(d, t=HEX)
+    # (A/B/C)相有功功率(12字节)
+    for d in dt['PPwr']:
+        s += dl645_xxxx_xxxx2hex(d, t=HEX)
+    # (A/B/C)相无功功率(12字节)
+    for d in dt['QPwr']:
+        s += dl645_xxxx_xxxx2hex(d, t=HEX)
+    # 脉冲常数(4字节)
+    s += dl645_xxxxxxxx2hex(dt['conste'], t=HEX)
+    # 启动功率(4字节)
+    s += dl645_xxxx_xxxx2hex(dt['startip'], t=HEX)
+    # 额定电压(2字节)
+    s += dl645_xxx_x2hex(dt['ub'], t=HEX)
+    # 额定电流(2字节)
+    s += dl645_x_xxx2hex(dt['ib'], t=HEX)
+    # 最大电流(2字节)
+    s += dl645_xx_xx2hex(dt['imax'], t=HEX)
+    # 频率(1字节)
+    s += dl645_xx2hex(dt['freq'], t=HEX)
+    # 接线模式(1字节)
+    s += dl645_xx2hex(dt['wriemode'], t=HEX)
+    # 接入模式(1字节)
+    s += dl645_xx2hex(dt['inmode'], t=HEX)
+    # 能量累加模式(1字节)
+    s += dl645_xx2hex(dt['addmode'], t=HEX)
+    # 有功等级(1字节)
+    s += dl645_xx2hex(dt['pclass'], t=HEX)
+    # 无功等级(1字节)
+    s += dl645_xx2hex(dt['qclass'], t=HEX)
+    # 电压增益(1字节)
+    s += dl645_xx2hex(dt['volgain'], t=HEX)
+    # 电流增益(1字节)
+    s += dl645_xx2hex(dt['ampgain'], t=HEX)
 
-        dt['data'] = s
-        dt['rtn'] = True
-    else:
-        dt['rtn'] = False
-        dt['msg'] = 'cfgMtrCali.json does not exist!'
+    dt['data'] = s
+    dt['rtn'] = True
 
 def makeMtrCaliData_ZeroLine(dt):
-    # dt['fileName'] = "cfgMtrCali.json"
-    # cfg = loadCfg(dt)
-    if dt['rtn']:
-        s = ''
-        dt['DI'] = 'F6FF'
-        # 密码 (4字节)
-        for d in dt['Password']:
-            a = hex(ord(d)).replace('0x', '00')
-            s += a[-2:]
-        # (A/B/C)相电流(12字节)
-        for d in dt['ZeroLineAmp']:
-            s += dl645_xx_xxxxxx2hex(d, t=HEX)
+    s = ''
+    dt['DI'] = 'F6FF'
+    # 密码 (4字节)
+    for d in dt['Password']:
+        a = hex(ord(d)).replace('0x', '00')
+        s += a[-2:]
+    # (A/B/C)相电流(12字节)
+    for d in dt['ZeroLineAmp']:
+        s += dl645_xx_xxxxxx2hex(d, t=HEX)
 
-        dt['data'] = s
-        dt['rtn'] = True
-    else:
-        dt['rtn'] = False
-        dt['msg'] = 'cfgMtrCali.json does not exist!'
+    dt['data'] = s
+    dt['rtn'] = True
+
 
 def makeMtrCaliData_ZeroLineOffset(dt):
-    # dt['fileName'] = "cfgMtrCali.json"
-    # cfg = loadCfg(dt)
-    if dt['rtn']:
-        s = ''
-        dt['DI'] = 'F7FF'
-        # 密码 (4字节)
-        for d in dt['Password']:
-            a = hex(ord(d)).replace('0x', '00')
-            s += a[-2:]
+    s = ''
+    dt['DI'] = 'F7FF'
+    # 密码 (4字节)
+    for d in dt['Password']:
+        a = hex(ord(d)).replace('0x', '00')
+        s += a[-2:]
 
-        dt['data'] = s
-        dt['rtn'] = True
-    else:
-        dt['rtn'] = False
-        dt['msg'] = 'cfgMtrCali.json does not exist!'
+    dt['data'] = s
+    dt['rtn'] = True
 
 def makeMtrCaliData_DataPowerOffset(dt):
-    # dt['fileName'] = "cfgMtrCali.json"
-    # cfg = loadCfg(dt)
-    if dt['rtn']:
-        s = ''
-        dt['DI'] = 'F8FF'
-        # 密码 (4字节)
-        for d in dt['Password']:
-            a = hex(ord(d)).replace('0x', '00')
-            s += a[-2:]
-        # (A/B/C)相电流(12字节)
-        for d in dt['PowerOffset']:
-            s += dl645_xx_xxxxxx2hex(d, 1, t=BCD)
+    s = ''
+    dt['DI'] = 'F8FF'
+    # 密码 (4字节)
+    for d in dt['Password']:
+        a = hex(ord(d)).replace('0x', '00')
+        s += a[-2:]
+    # (A/B/C)相电流(12字节)
+    for d in dt['PowerOffset']:
+        s += dl645_xx_xxxxxx2hex(d, 1, t=BCD)
 
-        dt['data'] = s
-        dt['rtn'] = True
-    else:
-        dt['rtn'] = False
-        dt['msg'] = 'cfgMtrCali.json does not exist!'
+    dt['data'] = s
+    dt['rtn'] = True
+
 
 def makeMtrVirtualData_Ins(dt):
-    # dt['fileName'] = "MtrVirtual.json"
-    # cfg = loadCfg(dt)
-    if dt['rtn']:
-        s = ''
-        dt['DI'] = '700000F0'
-        # Ua,Ub,Uc
-        for d in dt['Vol']:
-            s += dl645_xxx_x2hex(d, t=BCD)
-        # Ia,Ib,Ic,In
-        for d in dt['Amp']:
-            s += dl645_xx_xxxxxx2hex(d, t=BCD)
-        # PhUa,PhUb,PhUc,PhIa,PhIb,PhIc,AngleA,AngleB,AngleC,PhIc-PhIa
-        for d in dt['Arc']:
-            s += dl645_xxx_x2hex(d, t=BCD)
-        # 电压频率
-        for d in dt['Frequency']:
-            s += dl645_xxx_x2hex(d, t=BCD)
+    s = ''
+    dt['DI'] = '700000F0'
+    # Ua,Ub,Uc
+    for d in dt['Vol']:
+        s += dl645_xxx_x2hex(d, t=BCD)
+    # Ia,Ib,Ic,In
+    for d in dt['Amp']:
+        s += dl645_xx_xxxxxx2hex(d, t=BCD)
+    # PhUa,PhUb,PhUc,PhIa,PhIb,PhIc,AngleA,AngleB,AngleC,PhIc-PhIa
+    for d in dt['Arc']:
+        s += dl645_xxx_x2hex(d, t=BCD)
+    # 电压频率
+    for d in dt['Frequency']:
+        s += dl645_xxx_x2hex(d, t=BCD)
 
-        dt['data'] = s
-        dt['rtn'] = True
-    else:
-        dt['rtn'] = False
-        dt['msg'] = 'cfgMtrCali.json does not exist!'
+    dt['data'] = s
+    dt['rtn'] = True
+
 
 if __name__ == '__main__':
     dt = {}
