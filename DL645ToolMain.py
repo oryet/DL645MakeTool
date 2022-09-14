@@ -1,19 +1,21 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-import sys, DL645MakeUI
+import sys, MeterCalibrationUI
 from DL645MakeFrame import *
 from dl645 import *
 
 __author__ = 'jiangzy'
 
 
-class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
+class MainWindow(QMainWindow, MeterCalibrationUI.Ui_mainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
         # 将响应函数绑定到指定Button
         # self.pushButton.clicked.connect(self.showMessage)
         self.createActions()
-        self.dt = {'rtn': False, 'FrameHead': '', 'MtrAddr': '', 'Ctrl': '', 'DI': '', 'data': '', 'parm': ''}
+        self.dt = {'rtn': False, 'FrameHead': '', 'MtrAddr': '', 'Ctrl': '', 'DI': '', 'data': '', 'meterParm': '', 'tempParm': '',
+                   'Vol':[0]*3, 'Amp':[0]*3, 'PPwr':[0]*3, 'QPwr':[0]*3, 'conste':0, 'startip':0, 'ub':0, 'ib':0, 'imax':0,
+                   'freq':0, 'wriemode':0, 'inmode':0, 'addmode':0, 'pclass':0, 'qclass':0, 'volgain':0, 'ampgain':0}
         # path = r'F:\Work\NLY1502\需求和协议\NLY1502 NLY1220数据项定义表 - 2021-7-15(1).xlsx'
         # path = os.getcwd() + r'\\NLY1502 NLY1220数据项定义表.xls'
         # self.dl = openExcel(path)
@@ -25,6 +27,8 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         self.pushButton_Add33.clicked.connect(self.buttonAdd33)
         self.pushButton_Sub33.clicked.connect(self.buttonSub33)
         self.pushButton_CS.clicked.connect(self.buttonCS)
+        self.pushButton_DataRead.clicked.connect(self.buttonRead)
+        self.pushButton_DataSave.clicked.connect(self.buttonSave)
 
         # menu
         self.action_TempCali.triggered.connect(self.menuTempCali)
@@ -50,7 +54,7 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         # self.action_ExParm.triggered.connect(self.menuExParm)
 
     def buttonCode(self):
-        self.getLineEdit()
+        # self.getLineEdit()
         s = self.dt_make645Frame()
 
         self.textEdit_CodeData.setText(s)
@@ -92,19 +96,85 @@ class MainWindow(QMainWindow, DL645MakeUI.Ui_mainWindow):
         cs = pfun.calcCheckSum(s)
         self.textEdit_CodeData.setPlainText(cs)
 
+    def buttonRead(self):
+        self.dt['fileName'] = "cfgMtrCali.json"
+        self.dt = loadCfg(self.dt)
+        if self.dt['rtn'] == False:
+            return
+        self.setLineEdit()
+
+    def buttonSave(self):
+        if self.dt['rtn'] == True:
+            saveCfg(self.dt)
+
     def getLineEdit(self):
+        # if self.dt['rtn'] == False:
+        #     self.dt['fileName'] = "cfgMtrCali.json"
+        #     self.dt = loadCfg(self.dt)
         self.dt['FrameHead'] = self.lineEdit_FEFE.text()
         self.dt['MtrAddr'] = pub.strReverse(self.lineEdit_Addr.text())
         self.dt['Ctrl'] = self.lineEdit_Ctrl.text()
         self.dt['DI'] = pub.strReverse(self.lineEdit_DI.text())
-        self.dt['data'] = self.lineEdit_Data.text()
+        # self.dt['data'] = self.lineEdit_Data.text()
+        # vol
+        self.dt['Vol'][0] = float(self.lineEdit_Vol_A.text())
+        self.dt['Vol'][1] = float(self.lineEdit_Vol_B.text())
+        self.dt['Vol'][2] = float(self.lineEdit_Vol_C.text())
 
     def setLineEdit(self):
         self.lineEdit_FEFE.setText(self.dt['FrameHead'].upper())
         self.lineEdit_Addr.setText(pub.strReverse(self.dt['MtrAddr'].upper()))
         self.lineEdit_Ctrl.setText(self.dt['Ctrl'].upper())
         self.lineEdit_DI.setText(pub.strReverse(self.dt['DI'].upper()))
-        self.lineEdit_Data.setText(self.dt['data'].upper())
+        # self.lineEdit_Data.setText(self.dt['data'].upper())
+        # vol
+        self.lineEdit_Vol_A.setText(str(self.dt['Vol'][0]))
+        self.lineEdit_Vol_B.setText(str(self.dt['Vol'][1]))
+        self.lineEdit_Vol_C.setText(str(self.dt['Vol'][2]))
+        # amp
+        self.lineEdit_Amp_A.setText(str(self.dt['Amp'][0]))
+        self.lineEdit_Amp_B.setText(str(self.dt['Amp'][1]))
+        self.lineEdit_Amp_C.setText(str(self.dt['Amp'][2]))
+        # ppwr
+        self.lineEdit_PPwr_A.setText(str(self.dt['PPwr'][0]))
+        self.lineEdit_PPwr_B.setText(str(self.dt['PPwr'][1]))
+        self.lineEdit_PPwr_C.setText(str(self.dt['PPwr'][2]))
+        # qpwr
+        self.lineEdit_QPwr_A.setText(str(self.dt['QPwr'][0]))
+        self.lineEdit_QPwr_B.setText(str(self.dt['QPwr'][1]))
+        self.lineEdit_QPwr_C.setText(str(self.dt['QPwr'][2]))
+        # conste
+        self.lineEdit_conste.setText(str(self.dt['conste']))
+        # startip
+        self.lineEdit_startip.setText(str(self.dt['startip']))
+        # ub
+        self.lineEdit_ub.setText(str(self.dt['ub']))
+        # ib
+        self.lineEdit_ib.setText(str(self.dt['ib']))
+        # imax
+        self.lineEdit_imax.setText(str(self.dt['imax']))
+        # freq
+        self.lineEdit_freq.setText(str(self.dt['freq']))
+        # imax
+        self.lineEdit_wriemode.setText(str(self.dt['wriemode']))
+        # inmode
+        self.lineEdit_inmode.setText(str(self.dt['inmode']))
+        # addmode
+        self.lineEdit_addmode.setText(str(self.dt['addmode']))
+        # pclass
+        self.lineEdit_pclass.setText(str(self.dt['pclass']))
+        # qclass
+        self.lineEdit_qclass.setText(str(self.dt['qclass']))
+        # volgain
+        self.lineEdit_volgain.setText(str(self.dt['volgain']))
+        # ampgain
+        self.lineEdit_ampgain.setText(str(self.dt['ampgain']))
+        # ZeroLineAmp
+        self.lineEdit_ZeroLineAmp.setText(str(self.dt['ZeroLineAmp'][0]))
+        # PowerOffset
+        self.lineEdit_PowerOffset_A.setText(str(self.dt['PowerOffset'][0]))
+        self.lineEdit_PowerOffset_B.setText(str(self.dt['PowerOffset'][1]))
+        self.lineEdit_PowerOffset_C.setText(str(self.dt['PowerOffset'][2]))
 
     def dt_make645Frame(self):
         try:
