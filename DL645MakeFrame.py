@@ -71,6 +71,45 @@ def makeTempCaliData(dt):
         dt['rtn'] = False
         dt['msg'] = 'cfgTemp.json does not exist!'
 
+def makeTempCaliFileData(dt):
+    dt['fileName'] = "cfgTemp.json"
+    Config = loadCfg(dt)
+    if Config['rtn']:
+        num = Config['dataNum']
+        VolList = Config['VolList']
+        AmpList = Config['AmpList']
+        ZoneAmpList = Config['ZoneAmpList']
+        dt['tempParm'] = [num, VolList, AmpList, ZoneAmpList]
+
+        s1 = CalSum(VolList)
+        s2 = CalSum(AmpList)
+        s3 = CalSum(ZoneAmpList)
+
+        s = ''
+        # 数量
+        # s += dl645_xxxxxxxx2hex(num, 1)
+        # 电压补偿
+        for i in range(num):
+            s += dl645_xxxx2hex(VolList[i], 1)
+        # 电流补偿
+        for i in range(num):
+            s += dl645_xxxx2hex(AmpList[i], 1)
+        # 零线 电流补偿
+        for i in range(num):
+            s += dl645_xxxx2hex(ZoneAmpList[i], 1)
+
+        # 校验
+        s += dl645_xxxx2hex(s1, 1)
+        s += dl645_xxxx2hex(s2, 1)
+        s += dl645_xxxx2hex(s3, 1)
+
+        binname = './temp.bin'
+        binfile = open(binname, 'wb')  # 打开bin文件
+        sbyte = bytes(s, encoding="utf8")
+        binfile.write(sbyte)
+        binfile.close()
+
+
 def makeMtrCaliData(dt):
     s = ''
     # 密码 (4字节)

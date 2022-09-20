@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MeterCalibration V1.0 20220913</string>
+   <string>MeterCalibration V1.1 20220920</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -184,7 +184,7 @@
            </size>
           </property>
           <property name="text">
-           <string>JSLY</string>
+           <string>SZLY</string>
           </property>
           <property name="echoMode">
            <enum>QLineEdit::Password</enum>
@@ -994,7 +994,7 @@
     <addaction name="action_MtrPoffset"/>
     <addaction name="action_MtrEnd"/>
     <addaction name="separator"/>
-    <addaction name="action_MtrVirt"/>
+    <addaction name="action_TempCali_File"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -1102,6 +1102,11 @@
   <action name="action_MtrVirt">
    <property name="text">
     <string>模拟数据</string>
+   </property>
+  </action>
+  <action name="action_TempCali_File">
+   <property name="text">
+    <string>温补文件</string>
    </property>
   </action>
  </widget>

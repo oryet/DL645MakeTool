@@ -38,8 +38,9 @@ class MainWindow(QMainWindow, MeterCalibrationUI.Ui_mainWindow):
         self.action_MtrZoneLineOffset.triggered.connect(self.menuMtrCali_ZeroLineOffset)
         self.action_MtrStart.triggered.connect(self.menuMtrCali_Start)
         self.action_MtrPoffset.triggered.connect(self.menuMtrCali_PowerOffset)
-        self.action_MtrVirt.triggered.connect(self.menuMtrVirtual_SetIns)
+        # self.action_MtrVirt.triggered.connect(self.menuMtrVirtual_SetIns)
         self.action_MtrEnd.triggered.connect(self.menuMtrCali_End)
+        self.action_TempCali_File.triggered.connect(self.menuTempCaliFile)
 
         # self.action_Energy.triggered.connect(self.menuEnergy)
         # self.action_Parm.triggered.connect(self.menuParm)
@@ -242,6 +243,10 @@ class MainWindow(QMainWindow, MeterCalibrationUI.Ui_mainWindow):
             self.setLineEdit()
         else:
             self.alert(self.dt['msg'])
+
+    def menuTempCaliFile(self):
+        self.getLineEdit()
+        makeTempCaliFileData(self.dt)
 
     def menuMtrCali(self):
         self.getLineEdit()
